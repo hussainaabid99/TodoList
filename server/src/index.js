@@ -1,18 +1,25 @@
 import express from 'express';
-import connect from '../config/database.js'
+import bodyParser from 'body-parser';
+
+import connect from './config/database.js';
+import apiRoutes from './routes/index.js';
+
+const router = express.Router();
 
 
 const app = express();
 const PORT = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(PORT, async() => {
+app.use('/api', apiRoutes);
+
+app.listen(PORT, async () => {
   console.log(`Server started at Port: ${PORT}`);
 
   await connect();
- console.log("MongoDB connected");
+  console.log("MongoDB connected");
 
-})
+});
+

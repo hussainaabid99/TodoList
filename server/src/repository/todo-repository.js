@@ -1,7 +1,7 @@
 import Todo from "../models/todo.js";
 
 class TodoRepository {
-     
+
      async create(data) {
           try {
                const todo = await Todo.create(data);
@@ -9,6 +9,7 @@ class TodoRepository {
 
           } catch (error) {
                console.log(error);
+               throw error;
           }
      }
 
@@ -16,19 +17,21 @@ class TodoRepository {
           try {
                const todo = await Todo.findById(id);
                return todo;
-               
+
           } catch (error) {
                console.log(error);
+               throw error;
           }
      }
 
      async update(id, data) {
           try {
-               const todo = await Todo.findByIdAndUpdate(id, data, {new:true});
+               const todo = await Todo.findByIdAndUpdate(id, data, { new: true });
                return todo;
-               
+
           } catch (error) {
                console.log(error);
+               throw error;
           }
      }
 
@@ -38,6 +41,17 @@ class TodoRepository {
                return todo;
           } catch (error) {
                console.log(error);
+               throw error;
+          }
+     }
+
+     async getAll() {
+          try {
+               const todo = await Todo.find({});
+               return todo;
+          } catch (error) {
+               console.log(error);
+               throw error;
           }
      }
 }

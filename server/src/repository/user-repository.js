@@ -3,24 +3,26 @@ import User from "../models/user.js";
 class UserRepository {
 
      async create(data) {
-         
+
           try {
                const user = await User.create(data);
                return user;
 
           } catch (error) {
                console.log(error);
+               throw error;
           }
      }
 
      async update(id, data) {
-         
+
           try {
-               const user  = await User.findByIdAndUpdate(id, data,{new:true});
+               const user = await User.findByIdAndUpdate(id, data, { new: true });
                return user;
 
           } catch (error) {
                console.log(error);
+               throw error;
           }
      }
 
@@ -28,9 +30,10 @@ class UserRepository {
           try {
                const user = await User.findById(id);
                return user;
-               
+
           } catch (error) {
                console.log(error);
+               throw error;
           }
      }
 
@@ -38,10 +41,13 @@ class UserRepository {
           try {
                const user = await User.findByIdAndRemove(id);
                return user;
-               
+
           } catch (error) {
-               
+               console.log(error);
+               throw error;
           }
      }
 
 }
+
+export default UserRepository;
