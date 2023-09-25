@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const todoSchema = new Schema({
      taskName: {
@@ -7,8 +7,8 @@ const todoSchema = new Schema({
           required: true,
      },
      description: {
-         type: String,
-         required: true,
+          type: String,
+          required: true,
 
      },
      date: {
@@ -19,17 +19,17 @@ const todoSchema = new Schema({
      completed: {
           type: Boolean,
      },
-     user: {
-          type: mongoose.ObjectId,
+     userId: {
+          type: mongoose.Schema.Types.ObjectId,
           ref: 'User',
 
      },
      priority: {
-          type : String,
-          enum: ["High","Medium","Low"],
+          type: String,
+          enum: ["High", "Medium", "Low"],
 
      }
-}, {timestamps: true});
+}, { timestamps: true });
 
 const Todo = mongoose.model('Todo', todoSchema);
 

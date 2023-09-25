@@ -1,7 +1,8 @@
 import express from 'express';
 
 import { createTodo, getTodo, getAllTodo, removeTodo, updateTodo } from '../../controllers/todo-controller.js';
-import { createUser, getUser, removeUser, updateUser } from '../../controllers/user-controller.js';
+import { createUser, getUserWithTodos, removeUser, updateUser, getUserByEmail } from '../../controllers/user-controller.js';
+import validateUserEmail from '../../middlewares/validate.js';
 
 const router = express.Router();
 
@@ -13,8 +14,9 @@ router.delete('/todo/:id', removeTodo);
 router.patch('/todo/:id', updateTodo);
 
 //User
-router.post('/user', createUser);
-router.get('/user/:id', getUser);
+router.post('/signup', createUser);
+router.get('/todos/:userId', getUserWithTodos);
+router.post('/signin', validateUserEmail, getUserByEmail);
 router.delete('/user/:id', removeUser);
 router.patch('/user/:id', updateUser);
 

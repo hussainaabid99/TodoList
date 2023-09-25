@@ -22,10 +22,9 @@ export const createUser = async (req, res) => {
      }
 }
 
-export const getUser = async (req, res) => {
+export const getUserWithTodos = async (req, res) => {
      try {
-          console.log("params", req.params.id);
-          const response = await userService.get(req.params.id);
+          const response = await userService.get(req.params.userId);
 
           return res.status(200).json({
                success: true,
@@ -84,3 +83,22 @@ export const updateUser = async (req, res) => {
      }
 }
 
+export const getUserByEmail = async (req, res) => {
+     try {
+          console.log(req.body.email);
+          const response = await userService.getByEmail(req.body.email);
+          return res.status(200).json({
+               success: true,
+               message: "Successfully fetched a user via email",
+               data: response,
+               err: {}
+          })
+     } catch (error) {
+          return res.status(500).json({
+               success: false,
+               message: "Something went wrong",
+               data: {},
+               err: error.message
+          });
+     }
+}

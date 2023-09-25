@@ -1,3 +1,4 @@
+
 import User from "../models/user.js";
 
 class UserRepository {
@@ -26,6 +27,20 @@ class UserRepository {
           }
      }
 
+     async getByEmail(userEmail) {
+          try {
+               const user = await User.find({
+                    where: {
+                         email: userEmail
+                    }
+               });
+               return user;
+          } catch (error) {
+               console.log(error);
+               throw error;
+          }
+     }
+
      async get(id) {
           try {
                const user = await User.findById(id);
@@ -40,6 +55,19 @@ class UserRepository {
      async remove(id) {
           try {
                const user = await User.findByIdAndRemove(id);
+               return user;
+
+          } catch (error) {
+               console.log(error);
+               throw error;
+          }
+     }
+
+     async getWithTodos(id) {
+          try {
+               const user = await User.findById(id).populate({
+                    path: 'todos'
+               }).lean();
                return user;
 
           } catch (error) {

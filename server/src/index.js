@@ -3,12 +3,13 @@ import bodyParser from 'body-parser';
 
 import connect from './config/database.js';
 import apiRoutes from './routes/index.js';
+import { dbConfig } from './config/serverConfig.js';
 
 const router = express.Router();
 
 
 const app = express();
-const PORT = 3000;
+const PORT = dbConfig.PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
