@@ -29,11 +29,8 @@ class UserRepository {
 
      async getByEmail(userEmail) {
           try {
-               const user = await User.find({
-                    where: {
-                         email: userEmail
-                    }
-               });
+               const user = await User.findOne(userEmail);
+               console.log(user);
                return user;
           } catch (error) {
                console.log(error);

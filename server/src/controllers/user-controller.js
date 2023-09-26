@@ -2,9 +2,9 @@ import UserService from "../service/user-service.js";
 
 const userService = new UserService();
 
-export const createUser = async (req, res) => {
+export const signUp = async (req, res) => {
      try {
-          const response = await userService.create(req.body);
+          const response = await userService.signUp(req.body);
 
           return res.status(201).json({
                success: true,
@@ -83,13 +83,14 @@ export const updateUser = async (req, res) => {
      }
 }
 
-export const getUserByEmail = async (req, res) => {
+export const signIn = async (req, res) => {
      try {
           console.log(req.body.email);
-          const response = await userService.getByEmail(req.body.email);
+          const response = await userService.signIn(req.body);
+          console.log(response);
           return res.status(200).json({
                success: true,
-               message: "Successfully fetched a user via email",
+               message: "Successfully signed in",
                data: response,
                err: {}
           })

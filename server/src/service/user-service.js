@@ -1,4 +1,4 @@
-import UserRepository from "../repository/user-repository.js";
+import UserRepository from '../repository/user-repository.js';
 
 class UserService {
 
@@ -6,21 +6,53 @@ class UserService {
           this.userRepository = new UserRepository();
      }
 
-     async create(data) {
-
+     async signUp(data) {
           const user = await this.userRepository.create(data);
-          return user;
+          return ({
+               username: user.username,
+               email: user.email,
+               userId: user._id,
+               createdAt: user.createdAt,
+               updatedAt: user.updatedAt
+          });
      }
 
-     async getByEmail(data) {
-          const user = await this.userRepository.getByEmail(data);
-          return user;
+     async signIn(data) {
+
+          try {
+               const user = await this.userRepository.getByEmail({
+                    email: data.email
+               });
+               console.log(user);
+               if (!user) {
+                    throw {
+                         message: 'No user found',
+                         success: false,
+                    };
+               }
+               if (!user.comparePassword(data.password)) {
+                    throw {
+                         message: 'Incorrect Password',
+                         success: 'false'
+                    };
+               }
+               const token = user.genJWT();
+               return {
+                    token: token,
+                    userId: user._id,
+               };
+          } catch (error) {
+               console.log("Something went wrong in service layer");
+               throw error;
+          }
+
      }
 
      async get(userId) {
           const user = await this.userRepository.getWithTodos(userId);
+          console.log(user.todos);
           return ({
-               _id: user._id,
+               id: user._id,
                username: user.username,
                todos: user.todos,
                createdAt: user.createdAt,
@@ -37,6 +69,7 @@ class UserService {
           const user = await this.userRepository.remove(id);
           return user;
      }
+
 
 }
 
